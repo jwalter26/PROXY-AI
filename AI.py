@@ -18,7 +18,7 @@ def listen():
             data= input.recognize_google(audio)
             print("Input: " + data)
         except sr.UnknownValueError:
-            print("Input error and/or invalid input")
+            respond("I'm not sure what you mean sir")
     return data
 
 def respond(output):
@@ -32,7 +32,7 @@ def respond(output):
     os.remove(file)
 
 if __name__=='__main__':
-    respond("Good evening Mr. Rogalski, I am Proxy, your personal AI assistant")
+    respond("Good evening Mr. Rogalski")
           
     while(1):
         respond("How can I help you?")
@@ -41,7 +41,7 @@ if __name__=='__main__':
         if text==0:
             continue
             
-        if "stop" in str(text) or "exit" in str(text) or "bye" in str(text):
+        if "stop" in str(text) or "exit" in str(text) or "goodbye" in str(text) or "that will be all" in str(text):
             respond("Just holler whenever you need me sir")
             break
             
@@ -57,7 +57,7 @@ if __name__=='__main__':
             strTime=datetime.datetime.now().strftime("%H:%M:%S")
             respond(f"the time is {strTime}")     
         
-        elif 'search'  in text:
+        elif 'search' in text or "look up" in text:
             text = text.replace("search", "")
             webbrowser.open_new_tab(text)
         
@@ -69,8 +69,8 @@ if __name__=='__main__':
             answer = next(res.results).text
             respond("The answer is " + answer)
             
-        elif 'open google' in text:
-            webbrowser.open_new_tab("https://www.google.com")
+        elif 'open Google Chrome' in text:
+            webbrowser.open_new_tab(requests.get('https://www.google.com'))
             respond("Really? You needed me for that?")
             
         elif 'youtube' in text: 
@@ -82,9 +82,13 @@ if __name__=='__main__':
             query = text.split()[indx + 1:] 
             driver.get("http://www.youtube.com/results?search_query =" + '+'.join(query))              
                 
-        elif "open word" in text: 
-            respond("Opening Microsoft Word") 
-            os.startfile('Mention location of Word in your system') 
+        elif "open my current project" in text: 
+            respond("Right away sir") 
+            os.startfile("C:/Users/pc/AppData/Local/Programs/Microsoft VS Code/Code.exe")
+
+        elif "launch Discord" in text: 
+            respond("Opening Discord") 
+            os.startfile("C:/Users/pc/AppData/Local/Discord/app-1.0.9001/Discord.exe")
         
         else:
            respond("Terribly sorry sir, could you repeat that?")
