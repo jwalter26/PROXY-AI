@@ -1,3 +1,4 @@
+from re import search
 import speech_recognition as sr
 from datetime import datetime
 from pytz import timezone
@@ -9,6 +10,7 @@ import clr
 import subprocess
 from distutils import spawn
 from shutil import which
+import winapps
 from gtts import gTTS
 
 def listen():
@@ -39,8 +41,6 @@ if __name__=='__main__':
         if "proxy" in wakeWord:
             while(1):
                 print("Input: " + wakeWord)
-                print(os.environ["PATH"])
-                application = "friday the 13th"
                 respond("Yes sir?")
                 text=listen().lower()
                 
@@ -77,14 +77,31 @@ if __name__=='__main__':
                     respond(results)
                     print(clr.bold("Source: Wikipedia"))
                     break 
-                        
-                elif "launch" in text:
+
+                    
+                elif "gfhjghdkjggh" in text:
                     print("Input: " + text)
                     app = text.replace("launch ", "")
+                    searchName = app.replace(" ", "")
                     print(app)
                     respond("Launching " + app)
-                    print(spawn.find_executable(app)) 
+                    print(which(app)) 
                     #os.startfile(which(app))
+                    break
+                
+                elif "launch" in text:
+                    print("Input: " + text)
+                    searchName = text.replace("launch ", "")
+                    app = searchName.replace(" ", "")
+                    respond("Launching " + searchName)
+                    for a in winapps.search_installed(searchName):
+                        print(a.install_location)
+                    os.system("PATH %PATH%" + str(a.install_location))
+                    print(os.system("path"))
+                    print(app)
+                    exePath = os.system("where " + app)
+                    print(exePath)
+                    #os.startfile(exePath)
                     break
 
                 elif "what are you" in text or "tell me about yourself" in text:
