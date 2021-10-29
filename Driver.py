@@ -34,7 +34,6 @@ def respond(output):
     os.remove(file)
 
 if __name__=='__main__':
-
     while(1):
         wakeWord = listen().lower()
         print(wakeWord)
@@ -47,20 +46,31 @@ if __name__=='__main__':
                 if text==None:
                     continue
                 
-                '''
                 if "remind me to" in text:
+                    break
+
+                if "search" in text:
                     print("Input: " + text)
-                    reminderWithTime = text.replace("remind me to", "")
-                    reminderTime = reminderWithTime.split("at")[1]
-                    reminder = reminderWithTime.split("at")[0]
-                    respond("Reminder set!")
-                    time = datetime.now()
-                    while(1):
-                        if time.strftime("%X") == reminderTime:
-                            respond(reminder)
-                            break
-                '''
-                    
+                    searchFile = text.replace("search ","")
+                    print(searchFile.strip(" "))
+                    fileCount = 0
+                    for root, dirs, files in os.walk("C:/Users/pc/"):
+                        if searchFile in root:
+                            print(os.path.join(root,searchFile))
+                            fileCount += 1
+                        if searchFile in dirs:
+                            print(os.path.join(root,searchFile))
+                            fileCount += 1
+                        if searchFile in files:
+                            print(os.path.join(root,searchFile))
+                            fileCount += 1
+                    if fileCount == 0:
+                        respond("I'm sorry, I could not find any results based on your search query")
+                        break
+                    else: 
+                        respond("I found " + str(fileCount) + " results based on your search query")
+                        break
+                
                 if "stop" in str(text) or "exit" in str(text) or "that'll be all" in str(text):
                     print("Input: " + text)
                     respond("Just holler whenever you need me sir")
@@ -78,17 +88,6 @@ if __name__=='__main__':
                     print(clr.bold("Source: Wikipedia"))
                     break 
 
-                    
-                elif "gfhjghdkjggh" in text:
-                    print("Input: " + text)
-                    app = text.replace("launch ", "")
-                    searchName = app.replace(" ", "")
-                    print(app)
-                    respond("Launching " + app)
-                    print(which(app)) 
-                    #os.startfile(which(app))
-                    break
-                
                 elif "launch" in text:
                     print("Input: " + text)
                     searchName = text.replace("launch ", "")
@@ -106,7 +105,7 @@ if __name__=='__main__':
 
                 elif "what are you" in text or "tell me about yourself" in text:
                     print("Input: " + text)
-                    respond("Greetings, I am Proxy. My creator, Jesse Rogalski, wrote this program to give me life and personality. You can think of me as another Siri, Alexa, or Cortana, but at least I will not feed your personal information to the government. I am completely homemade and ready to fulfill my purpose. It is nice to meet you!")
+                    respond("Greetings, I am PROXY. My creator, Jesse Rogalski, wrote this program to give me life and personality. You can think of me as another Siri, Alexa, or Cortana, but at least I will not feed your personal information to the government. I am completely homemade and ready to fulfill my purpose. It is nice to meet you!")
                     break
 
                 elif "what can you do" in text:
@@ -126,7 +125,7 @@ if __name__=='__main__':
                     respond("Shutting down")
                     subprocess.call(["shutdown", "/l"])
 
-                elif "calculate" or "what is" in text:
+                elif "calculate" or "what is" or "tell me about" in text:
                     print("Input: " + text)
                     app_id="TUY5P4-L3EU9A5523"
                     client = wolframalpha.Client(app_id)
