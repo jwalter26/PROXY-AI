@@ -28,5 +28,12 @@ async def doMath(text):
 
 async def reminders(text):
     featureInProgress()
-    return
+    #return
     remindTimer = sched.scheduler(time.time,time.sleep)
+    txtArr = text.split()
+    timeNum = txtArr[len(txtArr)-1]
+    if "seconds" in text: remindTime = timeNum
+    elif "minutes" in text: remindTime = timeNum * 60
+    elif "hours" in text: remindTime = timeNum * 3600
+    reminder = text.replace(timeNum + len(txtArr), "")
+    remindTimer.enter(remindTime, 1, print(reminder))

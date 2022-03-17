@@ -7,6 +7,7 @@ from General import *
 from Tools import *
 from System import *
 from Lists import *
+from Music import *
 import settings
 
 async def listen():
@@ -80,7 +81,23 @@ if __name__=='__main__':
                 elif "calculate" in text or "what is" in text:
                     doMath()
                     break
-                
+
+                elif "make a list named" in text:
+                    createList()
+                    break
+
+                elif "delete" in text:
+                    deleteList()
+                    break
+
+                elif "add" and "to" in text:
+                    addToList()
+                    break
+
+                elif "cross out" in text or "remove" in text:
+                    removeFromList()
+                    break
+
                 else:
                     ProxyDoesNotKnow()
                     break
